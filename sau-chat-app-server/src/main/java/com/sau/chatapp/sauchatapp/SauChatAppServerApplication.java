@@ -1,0 +1,20 @@
+package com.sau.chatapp.sauchatapp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.sau.chatapp.sauchatapp.server.Server;
+
+@SpringBootApplication
+public class SauChatAppServerApplication {
+
+
+	
+	
+	public static void main(String[] args) {
+		Server server = new Server();
+		SpringApplication.run(SauChatAppServerApplication.class, args);
+		server.start();
+	}
+
+}
