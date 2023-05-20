@@ -9,11 +9,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "messages")
 public class MessageDto {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	private String sender;
 	private String receiver;
 	private String message;
@@ -24,21 +22,11 @@ public class MessageDto {
 	public MessageDto() {
 	}
 
-	public MessageDto(Long id, String sender, String receiver, String message, String time) {
-		super();
-		this.id = id;
+	public MessageDto(String sender, String receiver, String message, String time) {
 		this.sender = sender;
 		this.receiver = receiver;
 		this.message = message;
 		this.time = time;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getSender() {
@@ -64,6 +52,15 @@ public class MessageDto {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getTime() {
 		return time;
 	}
@@ -71,5 +68,5 @@ public class MessageDto {
 	public void setTime(String time) {
 		this.time = time;
 	}
-
+	
 }

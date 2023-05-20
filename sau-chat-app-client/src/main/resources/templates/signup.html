@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/sign.css">	
+</head>
+<body>
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+	<h2 class="inactive underlineHover" onclick="window.location.href='/signin'">Sign In</h2>
+	<h2 class="active" onclick="window.location.href='/signup'">Sign Up</h2>
+
+    <!-- Signup Form -->
+    <form method="POST" action="/signup" >
+      <input type="text" id="email" class="fadeIn first" name="email" placeholder="email">
+      <input type="text" id="username" class="fadeIn second" name="username" placeholder="username">
+      <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
+      <input type="submit" class="fadeIn fourth" value="Sign Up">
+    </form>
+
+    <div id="formFooter">
+      Welcome to Chat App
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

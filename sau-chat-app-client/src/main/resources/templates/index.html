@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link
+	href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<link rel="stylesheet" href="css/chat.css">
+</head>
+<body>
+	<div id="userName" th:attr="userName=${userName}"></div>
+	<div class="container bootstrap snippets bootdey">
+		<div class="row">
+			<div class="col-md-4 bg-white ">
+				<div class=" row border-bottom padding-sm" style="height: 40px;">
+				</div>
+				<ul class="friend-list">
+					<li class="active bounceInDown"><a class="clearfix" onclick="hideOtherDivs('main')">
+							<img src="images/chat.png" alt class="img-circle">
+							<div class="friend-name">
+								<strong>Main Chat</strong>
+							</div>
+					</a></li>
+					<li th:each="user : ${userList}" class="active bounceInDown"><a class="clearfix" th:onclick="hideOtherDivs([[${user.username}]])">
+							<img src="https://bootdey.com/img/Content/user_1.jpg" alt class="img-circle">
+							<div class="friend-name">
+								<strong th:text="${user.username}"></strong>
+							</div>
+					</a></li>
+
+				</ul>
+			</div>
+
+
+			<div class="col-md-8 bg-white chatDiv main">
+				<div class="chat-message">
+					<ul class="chat" id="chat-list-ul-main">
+						
+					</ul>
+				</div>
+				<div class="chat-box bg-white">
+					<div class="input-group">
+						<input class="form-control border no-shadow no-rounded"
+							placeholder="Type your message here" id="text-box-message-main">
+						<span class="input-group-btn">
+							<button class="btn btn-success no-rounded"
+								onclick="sendMessage('main')" type="button">Send</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-8 bg-white chatDiv" th:each="user : ${userList}" style="display:none" th:classappend="${user.username}">
+				<div class="chat-message">
+					<ul class="chat" th:id="'chat-list-ul-' + ${user.username}">
+						
+					</ul>
+				</div>
+				<div class="chat-box bg-white">
+					<div class="input-group">
+						<input class="form-control border no-shadow no-rounded"
+							placeholder="Type your message here" th:id="'text-box-message-' + ${user.username}">
+						<span class="input-group-btn">
+							<button class="btn btn-success no-rounded"
+								th:onclick="sendMessage([[${user.username}]])" type="button">Send</button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script
+		src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+	<script src="js/ChatClient.js"></script>
+</body>
+</html>
