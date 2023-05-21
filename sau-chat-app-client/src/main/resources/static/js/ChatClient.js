@@ -39,7 +39,6 @@ sahip text box daki mesajı okuyarak json objesini string biçiminde client e g�
 function sendMessage(receiver) {
 	var userName = document.getElementById("userName").getAttribute("userName");
 	var text = document.getElementById("text-box-message-"+receiver).value;
-	console.log("receiver: "+receiver);
 	stompClient.send("/app/chat", {},
 		JSON.stringify({ 'sender': userName,'receiver': receiver, 'message': text, 'time': new Date().toLocaleTimeString() }));
 }
@@ -64,7 +63,8 @@ Stompt clientinin subscribe olduğu topic e herhangi bir mesaj geldiğinde çal�
 Operasyonun amacı gelen requesti inceleyerek ekranda mesajın nerede gözükmesi gerektiğine karar veriyor
  */
 function handleReceivedMessage(request) {
-	if (request.sender == document.getElementById("userName").getAttribute("userName")) {
+	
+	if (request.sender == document.getElementById("userName").getAttribute("userName") ) {
 		// <li> öğesi oluşturma
 		var li = document.createElement("li");
 		li.className = "right clearfix";
@@ -107,7 +107,8 @@ function handleReceivedMessage(request) {
 		console.log(chatList);
 		chatList.appendChild(li);
 	}
-	else {
+//	#authentication.principal.username != message.sender and message.sender == user.username and message.receiver == #authentication.principal.username
+	else if(document.getElementById("userName").getAttribute("userName") != request.sender && document.getElementById("userName").getAttribute("userName") == request.receiver ){
 		// <li> öğesi oluşturma
 		var li = document.createElement("li");
 		li.className = "left clearfix";
@@ -146,7 +147,7 @@ function handleReceivedMessage(request) {
 		li.appendChild(div);
 
 		// Yeni öğeyi sayfaya ekleme
-		var chatList = document.getElementById("chat-list-ul-"+request.receiver);
+		var chatList = document.getElementById("chat-list-ul-"+request.sender);
 		chatList.appendChild(li);
 	}
 

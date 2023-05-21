@@ -21,14 +21,17 @@
 				<div class=" row border-bottom padding-sm" style="height: 40px;">
 				</div>
 				<ul class="friend-list">
-					<li class="active bounceInDown"><a class="clearfix" onclick="hideOtherDivs('main')">
-							<img src="images/chat.png" alt class="img-circle">
+					<li class="active bounceInDown"><a class="clearfix"
+						onclick="hideOtherDivs('main')"> <img src="images/chat.png"
+							alt class="img-circle">
 							<div class="friend-name">
 								<strong>Main Chat</strong>
 							</div>
 					</a></li>
-					<li th:each="user : ${userList}" class="active bounceInDown"><a class="clearfix" th:onclick="hideOtherDivs([[${user.username}]])">
-							<img src="https://bootdey.com/img/Content/user_1.jpg" alt class="img-circle">
+					<li th:each="user : ${userList}" class="active bounceInDown"><a
+						class="clearfix" th:onclick="hideOtherDivs([[${user.username}]])">
+							<img src="https://bootdey.com/img/Content/user_1.jpg" alt
+							class="img-circle">
 							<div class="friend-name">
 								<strong th:text="${user.username}"></strong>
 							</div>
@@ -40,8 +43,34 @@
 
 			<div class="col-md-8 bg-white chatDiv main">
 				<div class="chat-message">
-					<ul class="chat" id="chat-list-ul-main">
-						
+					<ul class="chat" id="chat-list-ul-main" >
+						<div th:each="message : ${userMessages}">
+						<li th:if="${#authentication.principal.username != message.sender and message.receiver == 'main'}" class="left clearfix"><span class="chat-img pull-left">
+								<img src="https://bootdey.com/img/Content/user_3.jpg"
+								alt="User Avatar">
+						</span>
+							<div class="chat-body clearfix">
+								<div class="header">
+									<strong class="primary-font" th:text="${message.sender}"></strong> <small
+										class="pull-right text-muted" th:text="${message.time}"><i class="fa fa-clock-o"></i>
+										</small>
+								</div>
+								<p th:text="${message.message}">
+								</p>
+							</div></li>
+						<li th:if="${#authentication.principal.username == message.sender and message.receiver == 'main'}"  class="right clearfix"><span class="chat-img pull-right">
+								<img src="https://bootdey.com/img/Content/user_1.jpg"
+								alt="User Avatar">
+						</span>
+							<div class="chat-body clearfix">
+								<div class="header">
+									<strong class="primary-font" th:text="${message.sender}"></strong> <small
+										class="pull-right text-muted" th:text="${message.time}"><i class="fa fa-clock-o"></i>
+										</small>
+								</div>
+								<p th:text="${message.message}"></p>
+							</div></li>
+						</div>
 					</ul>
 				</div>
 				<div class="chat-box bg-white">
@@ -55,18 +84,46 @@
 					</div>
 				</div>
 			</div>
-			
-			<div class="col-md-8 bg-white chatDiv" th:each="user : ${userList}" style="display:none" th:classappend="${user.username}">
+
+			<div class="col-md-8 bg-white chatDiv" th:each="user : ${userList}"
+				style="display: none" th:classappend="${user.username}">
 				<div class="chat-message">
-					<ul class="chat" th:id="'chat-list-ul-' + ${user.username}">
-						
+					<ul class="chat" th:id="'chat-list-ul-' + ${user.username}" >
+					<div th:each="message : ${userMessages}">
+						<li th:if="${#authentication.principal.username != message.sender and message.sender == user.username and message.receiver == #authentication.principal.username}" class="left clearfix"><span class="chat-img pull-left">
+								<img src="https://bootdey.com/img/Content/user_3.jpg"
+								alt="User Avatar">
+						</span>
+							<div class="chat-body clearfix">
+								<div class="header">
+									<strong class="primary-font" th:text="${message.sender}"></strong> <small
+										class="pull-right text-muted" th:text="${message.time}"><i class="fa fa-clock-o"></i>
+										</small>
+								</div>
+								<p th:text="${message.message}">
+								</p>
+							</div></li>
+						<li th:if="${#authentication.principal.username == message.sender and message.sender == #authentication.principal.username and message.receiver == user.username}"  class="right clearfix"><span class="chat-img pull-right">
+								<img src="https://bootdey.com/img/Content/user_1.jpg"
+								alt="User Avatar">
+						</span>
+							<div class="chat-body clearfix">
+								<div class="header">
+									<strong class="primary-font" th:text="${message.sender}"></strong> <small
+										class="pull-right text-muted" th:text="${message.time}"><i class="fa fa-clock-o"></i>
+										</small>
+								</div>
+								<p th:text="${message.message}"></p>
+							</div></li>
+							</div>
 					</ul>
 				</div>
 				<div class="chat-box bg-white">
 					<div class="input-group">
 						<input class="form-control border no-shadow no-rounded"
-							placeholder="Type your message here" th:id="'text-box-message-' + ${user.username}">
-						<span class="input-group-btn">
+							placeholder="Type your message here"
+							th:id="'text-box-message-' + ${user.username}"> <span
+							class="input-group-btn">
 							<button class="btn btn-success no-rounded"
 								th:onclick="sendMessage([[${user.username}]])" type="button">Send</button>
 						</span>

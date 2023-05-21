@@ -30,7 +30,7 @@ public class HomeController {
 		List<MessageDto> userMessages = new ArrayList<MessageDto>();
 		
 		for (MessageDto messageDto : allMessages) {
-			if(messageDto.getSender().equals(userName) || messageDto.getReceiver().equals(userName) ) {
+			if(messageDto.getSender().equals(userName) || messageDto.getReceiver().equals(userName) || messageDto.getReceiver().equals("main")) {
 				userMessages.add(messageDto);
 			}
 		}
@@ -38,7 +38,7 @@ public class HomeController {
 		List<User> userList = userService.getAllUsers();
 		model.addAttribute("userName", userName);
 		model.addAttribute("userList", userList);
-
+		model.addAttribute("userMessages",userMessages);
 		return "index";
 	}
 
