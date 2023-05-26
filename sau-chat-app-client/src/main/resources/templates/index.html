@@ -18,6 +18,7 @@
 	<div class="container bootstrap snippets bootdey">
 		<div class="row">
 			<div class="col-md-4 bg-white ">
+				<h1 th:text="${userName}" style="padding-top: 10px"></h1>
 				<div class=" row border-bottom padding-sm" style="height: 40px;">
 				</div>
 				<ul class="friend-list">
@@ -55,7 +56,7 @@
 										class="pull-right text-muted" th:text="${message.time}"><i class="fa fa-clock-o"></i>
 										</small>
 								</div>
-								<p th:text="${message.message}">
+								<p th:attr="sender=${message.sender},receiver=${message.receiver}" class="message-text" th:text="${message.message}">
 								</p>
 							</div></li>
 						<li th:if="${#authentication.principal.username == message.sender and message.receiver == 'main'}"  class="right clearfix"><span class="chat-img pull-right">
@@ -68,7 +69,7 @@
 										class="pull-right text-muted" th:text="${message.time}"><i class="fa fa-clock-o"></i>
 										</small>
 								</div>
-								<p th:text="${message.message}"></p>
+								<p th:attr="sender=${message.sender},receiver=${message.receiver}" class="message-text" th:text="${message.message}"></p>
 							</div></li>
 						</div>
 					</ul>
@@ -100,7 +101,7 @@
 										class="pull-right text-muted" th:text="${message.time}"><i class="fa fa-clock-o"></i>
 										</small>
 								</div>
-								<p th:text="${message.message}">
+								<p class="message-text" th:attr="sender=${message.sender},receiver=${message.receiver}" th:text="${message.message}">
 								</p>
 							</div></li>
 						<li th:if="${#authentication.principal.username == message.sender and message.sender == #authentication.principal.username and message.receiver == user.username}"  class="right clearfix"><span class="chat-img pull-right">
@@ -113,7 +114,7 @@
 										class="pull-right text-muted" th:text="${message.time}"><i class="fa fa-clock-o"></i>
 										</small>
 								</div>
-								<p th:text="${message.message}"></p>
+								<p class="message-text" th:attr="sender=${message.sender},receiver=${message.receiver}" th:text="${message.message}"></p>
 							</div></li>
 							</div>
 					</ul>
@@ -139,6 +140,8 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="js/ChatClient.js"></script>
 </body>
 </html>

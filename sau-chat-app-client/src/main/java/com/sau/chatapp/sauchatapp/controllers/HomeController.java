@@ -13,6 +13,7 @@ import com.sau.chatapp.sauchatapp.entities.MessageDto;
 import com.sau.chatapp.sauchatapp.entities.User;
 import com.sau.chatapp.sauchatapp.repositories.MessageRepository;
 import com.sau.chatapp.sauchatapp.services.UserService;
+import com.sau.chatapp.sauchatapp.util.EncryptionUtil;
 
 @Controller
 public class HomeController {
@@ -22,6 +23,9 @@ public class HomeController {
 
 	@Autowired
 	MessageRepository messageRepository;
+	
+	@Autowired
+	EncryptionUtil encryptionUtil;
 
 	@GetMapping("/")
 	String home(Model model, Authentication authentication) {
@@ -31,6 +35,12 @@ public class HomeController {
 		
 		for (MessageDto messageDto : allMessages) {
 			if(messageDto.getSender().equals(userName) || messageDto.getReceiver().equals(userName) || messageDto.getReceiver().equals("main")) {
+				try {
+//					messageDto.setMessage(EncryptionUtil.decrypt(messageDto.getMessage(), encryptionUtil.chatKey(messageDto.getReceiver(), messageDto.getSender())));
+				} catch (Exception e) {
+					
+					System.err.println("Şifre çözme sırasında home controllerda hata yaşandı. Hata: "+e);
+				}
 				userMessages.add(messageDto);
 			}
 		}
@@ -41,6 +51,8 @@ public class HomeController {
 		model.addAttribute("userMessages",userMessages);
 		return "index";
 	}
+	
+	
 
 	@GetMapping("/signin")
 	String signIn() {

@@ -1,0 +1,5 @@
+INSERT INTO roles(name) VALUES('ROLE_USER');
+
+INSERT INTO public.users(
+	 email, password, username)
+	VALUES ( 'main@gmail', 'main12341234', 'main');
